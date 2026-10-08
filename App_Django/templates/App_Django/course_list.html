@@ -1,0 +1,31 @@
+{% extends 'App_Django/base.html' %}
+{% block title %}Courses{% endblock %}
+{% block content %}
+<h2 class="page-title">Courses</h2>
+<section class="card">
+    <div class="toolbar">
+        <form method="get">
+            <input class="form-control" type="search" name="q" value="{{ q }}" placeholder="Search name or code">
+            <button class="btn">Search</button>
+        </form>
+        <a class="btn" href="{% url 'course_add' %}">+ Add Course</a>
+    </div>
+    {% if page %}
+    <div class="table-wrap"><table>
+        <thead><tr><th>Name</th><th>Code</th><th>Teacher</th><th>Students</th><th></th></tr></thead>
+        <tbody>
+        {% for c in page %}
+        <tr>
+            <td>{{ c.name }}</td><td>{{ c.code }}</td><td>{{ c.teacher.name|default:"-" }}</td><td>{{ c.student_total }}</td>
+            <td class="actions">
+                <a class="btn btn-sm" href="{% url 'course_edit' c.pk %}">Edit</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'course_delete' c.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table></div>
+    {% include 'App_Django/_pagination.html' %}
+    {% else %}<p class="empty">⚠️ No courses found.</p>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'App_Django/base.html' %}
+{% block title %}{{ student.name }}{% endblock %}
+{% block content %}
+<h2 class="page-title">Student Detail</h2>
+<section class="card detail form-card">
+    <dl>
+        <dt>Name</dt><dd>{{ student.name }}</dd>
+        <dt>Roll Number</dt><dd>{{ student.roll_number }}</dd>
+        <dt>Email</dt><dd>{{ student.email }}</dd>
+        <dt>Date of Birth</dt><dd>{{ student.date_of_birth|date:"d M Y" }}</dd>
+        <dt>Course</dt><dd>{{ student.course.name|default:"Not assigned" }}</dd>
+        <dt>Teacher</dt><dd>{{ student.course.teacher.name|default:"-" }}</dd>
+    </dl>
+    <a class="btn" href="{% url 'student_edit' student.pk %}">Update</a>
+    <a class="btn btn-danger" href="{% url 'student_delete' student.pk %}">Delete</a>
+    <a class="btn btn-light" href="{% url 'student_list' %}">Back</a>
+</section>
+{% endblock %}

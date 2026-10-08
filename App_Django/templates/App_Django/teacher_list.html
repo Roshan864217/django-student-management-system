@@ -1,0 +1,31 @@
+{% extends 'App_Django/base.html' %}
+{% block title %}Teachers{% endblock %}
+{% block content %}
+<h2 class="page-title">Teachers</h2>
+<section class="card">
+    <div class="toolbar">
+        <form method="get">
+            <input class="form-control" type="search" name="q" value="{{ q }}" placeholder="Search name or subject">
+            <button class="btn">Search</button>
+        </form>
+        <a class="btn" href="{% url 'teacher_add' %}">+ Add Teacher</a>
+    </div>
+    {% if page %}
+    <div class="table-wrap"><table>
+        <thead><tr><th>Name</th><th>Subject</th><th>Email</th><th>Courses</th><th></th></tr></thead>
+        <tbody>
+        {% for t in page %}
+        <tr>
+            <td>{{ t.name }}</td><td>{{ t.subject_specification }}</td><td>{{ t.email }}</td><td>{{ t.course_total }}</td>
+            <td class="actions">
+                <a class="btn btn-sm" href="{% url 'teacher_edit' t.pk %}">Edit</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'teacher_delete' t.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table></div>
+    {% include 'App_Django/_pagination.html' %}
+    {% else %}<p class="empty">⚠️ No teachers found.</p>{% endif %}
+</section>
+{% endblock %}

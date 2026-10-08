@@ -1,0 +1,30 @@
+{% extends 'App_Django/base.html' %}
+{% block title %}Students{% endblock %}
+{% block content %}
+<h2 class="page-title">Students</h2>
+<section class="card">
+    <div class="toolbar">
+        <form method="get">
+            <input class="form-control" type="search" name="q" value="{{ q }}" placeholder="Search name, roll no or email">
+            <button class="btn">Search</button>
+        </form>
+        <a class="btn" href="{% url 'student_add' %}">+ Add Student</a>
+    </div>
+    {% if page %}
+    <div class="table-wrap"><table>
+        <thead><tr><th>Name</th><th>Roll Number</th><th>Course</th><th></th></tr></thead>
+        <tbody>
+        {% for s in page %}
+        <tr>
+            <td>{{ s.name }}</td><td>{{ s.roll_number }}</td><td>{{ s.course.name|default:"-" }}</td>
+            <td class="actions"><a class="btn btn-sm" href="{% url 'student_detail' s.pk %}">View</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table></div>
+    {% include 'App_Django/_pagination.html' %}
+    {% else %}
+    <p class="empty">⚠️ No students found.</p>
+    {% endif %}
+</section>
+{% endblock %}

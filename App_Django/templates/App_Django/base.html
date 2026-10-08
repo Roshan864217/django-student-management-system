@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Student Management{% endblock %} | Student Management System</title>
+    <link rel="stylesheet" href="{% static 'App_Django/css/style.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="brand">🎓 STUDENT MANAGEMENT</div>
+        <nav class="nav">
+            <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">DASHBOARD</a>
+            <a href="{% url 'student_list' %}" class="{% if 'student' in request.resolver_match.url_name %}active{% endif %}">STUDENTS</a>
+            <a href="{% url 'teacher_list' %}" class="{% if 'teacher' in request.resolver_match.url_name %}active{% endif %}">TEACHERS</a>
+            <a href="{% url 'course_list' %}" class="{% if 'course' in request.resolver_match.url_name %}active{% endif %}">COURSES</a>
+            <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">ABOUT</a>
+            <a href="{% url 'admin:index' %}">ADMIN</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}<li class="{{ message.tags }}">{{ message }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div>Student Management System &middot; Developed by Roshan J</div>
+        <div>&copy; 2026 All Rights Reserved.</div>
+    </footer>
+</body>
+</html>

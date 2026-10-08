@@ -1,0 +1,13 @@
+{% extends 'App_Django/base.html' %}
+{% block title %}Confirm delete{% endblock %}
+{% block content %}
+<section class="card form-card" style="text-align:center">
+    <h3>Delete this {{ kind }}?</h3>
+    <p style="margin:14px 0"><strong>{{ object }}</strong><br>This action cannot be undone.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Yes, delete</button>
+        <a class="btn btn-light" href="javascript:history.back()">Cancel</a>
+    </form>
+</section>
+{% endblock %}

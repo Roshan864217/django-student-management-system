@@ -1,0 +1,27 @@
+{% extends 'App_Django/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2 class="page-title">Dashboard</h2>
+<div class="stats">
+    <a class="stat" href="{% url 'student_list' %}"><div class="num">{{ student_count }}</div><div class="label">Students</div></a>
+    <a class="stat" href="{% url 'teacher_list' %}"><div class="num">{{ teacher_count }}</div><div class="label">Teachers</div></a>
+    <a class="stat" href="{% url 'course_list' %}"><div class="num">{{ course_count }}</div><div class="label">Courses</div></a>
+    <div class="stat"><div class="num">{{ enrollment_count }}</div><div class="label">Enrollments</div></div>
+</div>
+<div class="grid-2">
+    <section class="card">
+        <h3>Recently added students</h3>
+        {% for s in recent_students %}
+            <p><a href="{% url 'student_detail' s.pk %}"><strong>{{ s.name }}</strong></a> &middot; {{ s.course.name|default:"No course" }}</p>
+        {% empty %}<p>No students yet.</p>{% endfor %}
+    </section>
+    <section class="card">
+        <h3>Students per course</h3>
+        {% for c in course_stats %}
+            <div class="bar-row">{{ c.name }} <strong>({{ c.total }})</strong>
+                <div class="bar"><span style="width: {% widthratio c.total student_count 100 %}%"></span></div>
+            </div>
+        {% empty %}<p>No courses yet.</p>{% endfor %}
+    </section>
+</div>
+{% endblock %}
